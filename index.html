@@ -79,6 +79,10 @@ function preview(){
 }
 
 async function sendEmail(){
+    if(!email){
+    alert("이메일을 입력하세요");
+    return;
+  }
   let data = {
     client: document.getElementById('client').value,
     email: document.getElementById('email').value,
