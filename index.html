@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>견적서</title>
 
+<!-- ✅ 캡쳐용 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
 <style>
 body { font-family: Arial; padding:20px; }
 input, textarea { width:100%; margin:5px 0; padding:8px; }
@@ -52,49 +55,53 @@ td, th {
 <p id="result"></p>
 
 <script>
+// ✅ 미리보기 (절대 오류 안 나게 안정화)
 function preview(){
-  let client = document.getElementById('client').value;
-  let email = document.getElementById('email').value;
-  let item = document.getElementById('item').value;
-  let price = document.getElementById('price').value;
-  let qty = document.getElementById('qty').value;
-  let note = document.getElementById('note').value;
+  try {
+    let client = document.getElementById('client').value || "";
+    let email = document.getElementById('email').value || "";
+    let item = document.getElementById('item').value || "";
+    let price = Number(document.getElementById('price').value) || 0;
+    let qty = Number(document.getElementById('qty').value) || 0;
+    let note = document.getElementById('note').value || "";
 
-  let total = price * qty;
-  let vat = total * 0.1;
-  let final = total + vat;
+    let total = price * qty;
+    let vat = Math.floor(total * 0.1);
+    let final = total + vat;
 
-  document.getElementById('preview').innerHTML = `
-    <h3>견적서</h3>
-    <p><strong>수신처</strong> : ${client}</p>
-    <p><strong>Email</strong> : ${email}</p>
+    document.getElementById('preview').innerHTML = `
+      <h3>견적서</h3>
+      <p><strong>수신처</strong> : ${client}</p>
+      <p><strong>Email</strong> : ${email}</p>
 
-    <table>
-      <tr>
-        <th>항목</th>
-        <th>단가</th>
-        <th>수량</th>
-        <th>금액</th>
-      </tr>
-      <tr>
-        <td>${item}</td>
-        <td>${price}</td>
-        <td>${qty}</td>
-        <td>${total}</td>
-      </tr>
-    </table>
+      <table>
+        <tr>
+          <th>항목</th>
+          <th>단가</th>
+          <th>수량</th>
+          <th>금액</th>
+        </tr>
+        <tr>
+          <td>${item}</td>
+          <td>${price.toLocaleString()}</td>
+          <td>${qty}</td>
+          <td>${total.toLocaleString()}</td>
+        </tr>
+      </table>
 
-    <p>공급가액: ${total}</p>
-    <p>부가세: ${vat}</p>
-    <h3>총액: ${final}</h3>
+      <p>공급가액: ${total.toLocaleString()}</p>
+      <p>부가세: ${vat.toLocaleString()}</p>
+      <h3>총액: ${final.toLocaleString()}</h3>
 
-    <p>${note}</p>
-  `;
+      <p>${note}</p>
+    `;
+  } catch(e){
+    console.log(e);
+    alert("미리보기 오류 발생");
+  }
 }
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-
-<script>
+// ✅ 이메일 발송 + 이미지 첨부
 async function sendEmail(){
 
   let email = document.getElementById('email').value;
@@ -107,7 +114,12 @@ async function sendEmail(){
   try {
     let element = document.getElementById("preview");
 
-    // 👉 미리보기 캡쳐
+    // 👉 미리보기 먼저 생성 안 했으면 자동 실행
+    if(!element.innerHTML){
+      preview();
+    }
+
+    // 👉 화면 캡쳐
     let canvas = await html2canvas(element);
     let imageData = canvas.toDataURL("image/png");
 
@@ -117,7 +129,7 @@ async function sendEmail(){
       item: document.getElementById('item').value,
       price: document.getElementById('price').value,
       qty: document.getElementById('qty').value,
-      image: imageData   // 👈 추가
+      image: imageData
     };
 
     let res = await fetch('/api/send', {
@@ -125,6 +137,10 @@ async function sendEmail(){
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(data)
     });
+
+    if(!res.ok){
+      throw new Error("서버 오류");
+    }
 
     let result = await res.json();
 
