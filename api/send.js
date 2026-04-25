@@ -8,7 +8,7 @@ export default async function handler(req, res) {
       service: 'gmail',
       auth: {
         user: 'camellus.lee@gmail.com',
-        pass: 'khvv yocx zqet llvx'
+        pass: 'khvvyocxzqetllvx'
       }
     });
 
