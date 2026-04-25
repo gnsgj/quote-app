@@ -7,8 +7,8 @@ export default async function handler(req, res) {
     let transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: '너의이메일@gmail.com',
-        pass: '앱비밀번호'
+        user: 'camellus.lee@gmail.com',
+        pass: 'khvv yocx zqet llvx'
       }
     });
 
@@ -19,7 +19,7 @@ export default async function handler(req, res) {
     `;
 
     await transporter.sendMail({
-      from: '너의이메일@gmail.com',
+      from: 'camellus.lee@gmail.com',
       to: email,
       subject: '견적서',
       html: html
