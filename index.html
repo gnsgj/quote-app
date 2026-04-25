@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>견적서</title>
+<style>
+body { font-family: Arial; padding:20px; }
+input, textarea { width:100%; margin:5px 0; padding:8px; }
+button { width:100%; padding:12px; margin-top:10px; font-size:16px; }
+
+.preview {
+  margin-top:20px;
+  padding:15px;
+  border:1px solid #ccc;
+  background:#f9f9f9;
+}
+
+table {
+  width:100%;
+  border-collapse: collapse;
+  margin-top:10px;
+}
+td, th {
+  border:1px solid #000;
+  padding:5px;
+  text-align:center;
+}
+</style>
+</head>
+
+<body>
+
+<h2>견적서 작성</h2>
+
+<input id="client" placeholder="수신처">
+<input id="email" placeholder="이메일">
+<input id="phone" placeholder="연락처">
+
+<input id="item" placeholder="항목">
+<input id="price" type="number" placeholder="단가">
+<input id="qty" type="number" placeholder="수량">
+
+<textarea id="note" placeholder="기타사항"></textarea>
+
+<button onclick="preview()">미리보기</button>
+
+<div class="preview" id="preview"></div>
+
+<script>
+function preview(){
+  let client = document.getElementById('client').value;
+  let item = document.getElementById('item').value;
+  let price = document.getElementById('price').value;
+  let qty = document.getElementById('qty').value;
+  let note = document.getElementById('note').value;
+
+  let total = price * qty;
+  let vat = total * 0.1;
+  let final = total + vat;
+
+  document.getElementById('preview').innerHTML = `
+    <h3>견적서</h3>
+    <p>수신처: ${client}</p>
+
+    <table>
+      <tr>
+        <th>항목</th>
+        <th>단가</th>
+        <th>수량</th>
+        <th>금액</th>
+      </tr>
+      <tr>
+        <td>${item}</td>
+        <td>${price}</td>
+        <td>${qty}</td>
+        <td>${total}</td>
+      </tr>
+    </table>
+
+    <p>공급가액: ${total}</p>
+    <p>부가세: ${vat}</p>
+    <h3>총액: ${final}</h3>
+
+    <p>${note}</p>
+  `;
+}
+</script>
+
+</body>
+</html>
