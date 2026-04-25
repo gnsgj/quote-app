@@ -18,10 +18,6 @@ export default async function handler(req, res) {
       <p>${item} / ${qty}개 / ${price}원</p>
     `;
 
-    if(!data.email){
-  alert("이메일을 입력하세요");
-  return;
-}
     await transporter.sendMail({
       from: 'camellus.lee@gmail.com',
       to: email,
