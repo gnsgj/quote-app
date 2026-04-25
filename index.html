@@ -96,32 +96,41 @@ async function sendEmail(){
 
   let email = document.getElementById('email').value;
 
-  // ✅ 이메일 입력 체크
   if(!email || !email.includes("@")){
     alert("올바른 이메일을 입력하세요");
     return;
   }
 
-  let data = {
-    client: document.getElementById('client').value,
-    email: email,
-    item: document.getElementById('item').value,
-    price: document.getElementById('price').value,
-    qty: document.getElementById('qty').value
-  };
+  try {
+    let data = {
+      client: document.getElementById('client').value,
+      email: email,
+      item: document.getElementById('item').value,
+      price: document.getElementById('price').value,
+      qty: document.getElementById('qty').value
+    };
 
-  let res = await fetch('/api/send', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify(data)
-  });
+    let res = await fetch('/api/send', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(data)
+    });
 
-  let result = await res.json();
+    if(!res.ok){
+      throw new Error("서버 응답 오류");
+    }
 
-  if(result.success){
-    document.getElementById('result').innerText = "✅ 발송 완료";
-  } else {
-    document.getElementById('result').innerText = "❌ 발송 실패";
+    let result = await res.json();
+
+    if(result.success){
+      document.getElementById('result').innerText = "✅ 발송 완료";
+    } else {
+      document.getElementById('result').innerText = "❌ 발송 실패";
+    }
+
+  } catch (error) {
+    console.log(error);
+    document.getElementById('result').innerText = "❌ 서버 오류 발생";
   }
 }
 </script>
