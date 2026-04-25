@@ -92,6 +92,9 @@ function preview(){
   `;
 }
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+<script>
 async function sendEmail(){
 
   let email = document.getElementById('email').value;
@@ -102,12 +105,19 @@ async function sendEmail(){
   }
 
   try {
+    let element = document.getElementById("preview");
+
+    // 👉 미리보기 캡쳐
+    let canvas = await html2canvas(element);
+    let imageData = canvas.toDataURL("image/png");
+
     let data = {
       client: document.getElementById('client').value,
       email: email,
       item: document.getElementById('item').value,
       price: document.getElementById('price').value,
-      qty: document.getElementById('qty').value
+      qty: document.getElementById('qty').value,
+      image: imageData   // 👈 추가
     };
 
     let res = await fetch('/api/send', {
@@ -115,10 +125,6 @@ async function sendEmail(){
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(data)
     });
-
-    if(!res.ok){
-      throw new Error("서버 응답 오류");
-    }
 
     let result = await res.json();
 
