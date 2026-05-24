@@ -248,6 +248,12 @@ button{
   line-height:1.2;
 }
 
+#result{
+  margin-top:15px;
+  font-weight:bold;
+  text-align:center;
+}
+
 @media(max-width:768px){
 
   .preview{
@@ -282,6 +288,12 @@ button{
 <button onclick="preview()">
 견적서 미리보기
 </button>
+
+<button onclick="sendEmail()">
+이메일 발송
+</button>
+
+<p id="result"></p>
 
 </div>
 
@@ -681,6 +693,76 @@ function preview(){
   style="margin-top:20px;"></div>
 
   `;
+
+}
+
+async function sendEmail(){
+
+  const email =
+  document.getElementById('email').value;
+
+  if(!email){
+
+    alert('이메일 주소를 입력하세요');
+    return;
+
+  }
+
+  const preview =
+  document.getElementById('preview');
+
+  const canvas =
+  await html2canvas(preview,{
+    scale:2
+  });
+
+  const image =
+  canvas.toDataURL('image/png');
+
+  document.getElementById('result').innerText =
+  '메일 발송중...';
+
+  try{
+
+    const response =
+    await fetch('/api/send',{
+
+      method:'POST',
+
+      headers:{
+        'Content-Type':'application/json'
+      },
+
+      body:JSON.stringify({
+
+        email:email,
+        image:image
+
+      })
+
+    });
+
+    const data =
+    await response.json();
+
+    if(data.success){
+
+      document.getElementById('result').innerText =
+      '발송 완료';
+
+    }else{
+
+      document.getElementById('result').innerText =
+      '발송 실패';
+
+    }
+
+  }catch(e){
+
+    document.getElementById('result').innerText =
+    '서버 오류 발생';
+
+  }
 
 }
 
