@@ -18,7 +18,7 @@ body{
 }
 
 .form-area{
-  max-width:500px;
+  max-width:520px;
   margin:auto;
   background:#fff;
   padding:20px;
@@ -29,6 +29,19 @@ body{
 .form-area h2{
   margin-top:0;
   margin-bottom:20px;
+}
+
+.item-box{
+  border:1px solid #ddd;
+  padding:15px;
+  margin-bottom:15px;
+  border-radius:8px;
+  background:#fafafa;
+}
+
+.item-title{
+  font-weight:bold;
+  margin-bottom:10px;
 }
 
 input, textarea{
@@ -51,6 +64,15 @@ button{
   color:#fff;
   font-size:16px;
   cursor:pointer;
+}
+
+.add-btn{
+  background:#2f5d99;
+}
+
+.delete-btn{
+  background:#b33636;
+  margin-top:0;
 }
 
 .preview-wrapper{
@@ -249,15 +271,17 @@ button{
 <input id="email" placeholder="이메일">
 <input id="phone" placeholder="참조">
 
-<input id="item" placeholder="품목명">
-<input id="detail" placeholder="세부내용">
+<div id="items"></div>
 
-<input id="price" type="number" placeholder="단가">
-<input id="qty" type="number" placeholder="수량">
+<button class="add-btn" onclick="addItem()">
++ 품목 추가
+</button>
 
 <textarea id="note" rows="5" placeholder="특이사항"></textarea>
 
-<button onclick="preview()">견적서 미리보기</button>
+<button onclick="preview()">
+견적서 미리보기
+</button>
 
 </div>
 
@@ -266,6 +290,42 @@ button{
 </div>
 
 <script>
+
+let itemCount = 0;
+
+function addItem(){
+
+  itemCount++;
+
+  const div = document.createElement('div');
+
+  div.className = 'item-box';
+
+  div.innerHTML = `
+
+    <div class="item-title">
+      품목 ${itemCount}
+    </div>
+
+    <input class="item-name" placeholder="품목명">
+
+    <input class="item-detail" placeholder="세부내용">
+
+    <input class="item-price" type="number" placeholder="단가">
+
+    <input class="item-qty" type="number" placeholder="수량">
+
+    <button class="delete-btn" onclick="this.parentElement.remove()">
+      품목 삭제
+    </button>
+
+  `;
+
+  document.getElementById('items').appendChild(div);
+
+}
+
+addItem();
 
 function numberToKorean(num){
 
@@ -337,22 +397,55 @@ function preview(){
   let phone =
   document.getElementById('phone').value || '';
 
-  let item =
-  document.getElementById('item').value || '';
-
-  let detail =
-  document.getElementById('detail').value || '';
-
-  let price =
-  Number(document.getElementById('price').value) || 0;
-
-  let qty =
-  Number(document.getElementById('qty').value) || 0;
-
   let note =
   document.getElementById('note').value || '';
 
-  let total = price * qty;
+  let today = new Date().toLocaleDateString();
+
+  const names =
+  document.querySelectorAll('.item-name');
+
+  const details =
+  document.querySelectorAll('.item-detail');
+
+  const prices =
+  document.querySelectorAll('.item-price');
+
+  const qtys =
+  document.querySelectorAll('.item-qty');
+
+  let rows = '';
+
+  let total = 0;
+
+  for(let i=0; i<names.length; i++){
+
+    let name = names[i].value || '';
+    let detail = details[i].value || '';
+    let price = Number(prices[i].value) || 0;
+    let qty = Number(qtys[i].value) || 0;
+
+    let amount = price * qty;
+
+    total += amount;
+
+    rows += `
+
+      <tr>
+
+        <td>${i+1}</td>
+        <td>${name}</td>
+        <td>${detail}</td>
+        <td>${price.toLocaleString()}</td>
+        <td>${qty}</td>
+        <td>₩${amount.toLocaleString()}</td>
+        <td>공임비 포함</td>
+
+      </tr>
+
+    `;
+
+  }
 
   let vat = Math.floor(total * 0.1);
 
@@ -361,7 +454,25 @@ function preview(){
   let koreanMoney =
   numberToKorean(final);
 
-  let today = new Date().toLocaleDateString();
+  let blankRows = '';
+
+  let remain = 10 - names.length;
+
+  for(let i=0; i<remain; i++){
+
+    blankRows += `
+    <tr class="blank-row">
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    `;
+
+  }
 
   document.getElementById('preview').innerHTML = `
 
@@ -525,28 +636,9 @@ function preview(){
 
     </tr>
 
-    <tr>
+    ${rows}
 
-      <td>1</td>
-      <td>${item}</td>
-      <td>${detail}</td>
-      <td>${price.toLocaleString()}</td>
-      <td>${qty}</td>
-      <td>₩${total.toLocaleString()}</td>
-      <td>공임비 포함</td>
-
-    </tr>
-
-    <tr class="blank-row"><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-    <tr class="blank-row"><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-    <tr class="blank-row"><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-    <tr class="blank-row"><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-    <tr class="blank-row"><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-    <tr class="blank-row"><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-    <tr class="blank-row"><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-    <tr class="blank-row"><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-    <tr class="blank-row"><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-    <tr class="blank-row"><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    ${blankRows}
 
     <tr class="bottom-total">
 
