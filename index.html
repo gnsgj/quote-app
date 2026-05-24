@@ -89,6 +89,7 @@ button{
   box-sizing:border-box;
   color:#000;
   box-shadow:0 0 15px rgba(0,0,0,0.15);
+  image-rendering:auto;
 }
 
 .top-line{
@@ -184,11 +185,11 @@ button{
 }
 
 .no-right-border{
-  border-right:none !important;
+  border-right:1px solid #9f8f80 !important;
 }
 
 .no-left-border{
-  border-left:none !important;
+  border-left:1px solid #9f8f80 !important;
 }
 
 .quote-table{
@@ -713,7 +714,13 @@ async function sendEmail(){
 
   const canvas =
   await html2canvas(preview,{
-    scale:2
+
+    scale:4,
+
+    useCORS:true,
+
+    backgroundColor:'#ffffff'
+
   });
 
   const image =
