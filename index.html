@@ -1,10 +1,12 @@
+# index.html 전체 코드 (엑셀 양식 최대한 동일 버전)
+
+```html
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>골프존 견적서</title>
+<title>견적서</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
@@ -13,13 +15,9 @@
 body{
   margin:0;
   padding:20px;
-  background:#f3f3f3;
+  background:#f2f2f2;
   font-family:'Malgun Gothic', sans-serif;
 }
-
-/* =========================
-   모바일 입력 영역
-========================= */
 
 .form-area{
   max-width:500px;
@@ -27,7 +25,7 @@ body{
   background:#fff;
   padding:20px;
   border-radius:10px;
-  box-shadow:0 2px 10px rgba(0,0,0,0.08);
+  box-shadow:0 2px 10px rgba(0,0,0,0.1);
 }
 
 .form-area h2{
@@ -39,26 +37,22 @@ input, textarea{
   box-sizing:border-box;
   padding:12px;
   margin-bottom:10px;
-  font-size:16px;
   border:1px solid #ccc;
-  border-radius:6px;
+  border-radius:5px;
+  font-size:15px;
 }
 
 button{
   width:100%;
   padding:14px;
-  border:none;
-  border-radius:6px;
   background:#111;
   color:#fff;
+  border:none;
+  border-radius:5px;
   font-size:16px;
   cursor:pointer;
   margin-top:10px;
 }
-
-/* =========================
-   A4 견적서 영역
-========================= */
 
 .preview-wrapper{
   overflow:auto;
@@ -68,71 +62,107 @@ button{
 .preview{
   width:210mm;
   min-height:297mm;
-
   background:#fff;
   margin:auto;
   padding:15mm;
-
   box-sizing:border-box;
-
+  box-shadow:0 0 15px rgba(0,0,0,0.15);
   color:#000;
-  font-size:13px;
-
-  box-shadow:0 0 15px rgba(0,0,0,0.1);
 }
-
-/* 제목 */
 
 .doc-title{
   text-align:center;
-  font-size:32px;
+  font-size:38px;
   font-weight:bold;
-  margin-bottom:30px;
-  letter-spacing:10px;
+  letter-spacing:12px;
+  margin-bottom:40px;
 }
 
-/* 상단 정보 */
-
-.top-info{
+.top-grid{
   display:flex;
   justify-content:space-between;
   margin-bottom:25px;
 }
 
-.left-info{
-  width:48%;
+.left-box{
+  width:40%;
 }
 
-.right-info{
-  width:48%;
-  text-align:right;
-  line-height:1.8;
+.right-box{
+  width:52%;
+  border:1px solid #000;
 }
 
-.info-row{
-  margin-bottom:10px;
+.row{
+  display:flex;
+  margin-bottom:12px;
+  font-size:15px;
 }
 
-/* 금액 박스 */
-
-.price-box{
-  border:2px solid #000;
-  padding:15px;
-  text-align:center;
-  margin-bottom:25px;
-}
-
-.price-title{
-  font-size:16px;
-  margin-bottom:10px;
-}
-
-.price-total{
-  font-size:28px;
+.label{
+  width:80px;
   font-weight:bold;
 }
 
-/* 품목 테이블 */
+.notice{
+  margin-top:40px;
+  font-size:15px;
+}
+
+.row2{
+  display:flex;
+  border-bottom:1px solid #000;
+}
+
+.row2:last-child{
+  border-bottom:none;
+}
+
+.label2{
+  width:110px;
+  background:#f4f4f4;
+  border-right:1px solid #000;
+  padding:8px;
+  font-weight:bold;
+  box-sizing:border-box;
+}
+
+.value2{
+  flex:1;
+  padding:8px;
+  box-sizing:border-box;
+}
+
+.middle-area{
+  margin-bottom:25px;
+}
+
+.middle-row{
+  display:flex;
+  margin-bottom:10px;
+}
+
+.middle-label{
+  width:100px;
+  font-weight:bold;
+}
+
+.sum-box{
+  border:2px solid #000;
+  padding:20px;
+  text-align:center;
+  margin-bottom:30px;
+}
+
+.sum-title{
+  font-size:18px;
+  margin-bottom:10px;
+}
+
+.sum-price{
+  font-size:30px;
+  font-weight:bold;
+}
 
 .quote-table{
   width:100%;
@@ -145,20 +175,38 @@ button{
   border:1px solid #000;
   padding:10px;
   text-align:center;
+  font-size:14px;
 }
 
 .quote-table th{
-  background:#f0f0f0;
+  background:#efefef;
 }
 
-/* 하단 */
+.total-label{
+  text-align:right;
+  font-weight:bold;
+}
 
-.bottom-area{
-  margin-top:30px;
+.total-price{
+  font-weight:bold;
+  font-size:18px;
+}
+
+.note-area{
+  margin-top:40px;
+}
+
+.note-title{
+  font-weight:bold;
+  margin-bottom:10px;
+}
+
+.note-box{
+  border:1px solid #000;
+  min-height:120px;
+  padding:10px;
   line-height:1.8;
 }
-
-/* 모바일 대응 */
 
 @media(max-width:768px){
 
@@ -175,10 +223,6 @@ button{
 
 <body>
 
-<!-- =========================
-     입력 영역
-========================= -->
-
 <div class="form-area">
 
 <h2>견적서 작성</h2>
@@ -188,46 +232,38 @@ button{
 <input id="phone" placeholder="연락처">
 
 <input id="item" placeholder="품목명">
+<input id="detail" placeholder="세부내용">
 <input id="price" type="number" placeholder="단가">
 <input id="qty" type="number" placeholder="수량">
 
-<textarea id="note" rows="5" placeholder="비고"></textarea>
+<textarea id="note" rows="5" placeholder="특이사항"></textarea>
 
 <button onclick="preview()">견적서 미리보기</button>
-
 <button onclick="sendEmail()">이메일 발송</button>
 
 <p id="result"></p>
 
 </div>
 
-<!-- =========================
-     A4 견적서
-========================= -->
-
 <div class="preview-wrapper">
-
-<div class="preview" id="preview">
-
-<!-- JS로 생성 -->
-
-</div>
-
+<div class="preview" id="preview"></div>
 </div>
 
 <script>
 
 function preview(){
 
-  let client = document.getElementById('client').value || "";
-  let email = document.getElementById('email').value || "";
-  let phone = document.getElementById('phone').value || "";
+  let client = document.getElementById('client').value || '';
+  let email = document.getElementById('email').value || '';
+  let phone = document.getElementById('phone').value || '';
 
-  let item = document.getElementById('item').value || "";
+  let item = document.getElementById('item').value || '';
+  let detail = document.getElementById('detail').value || '';
+
   let price = Number(document.getElementById('price').value) || 0;
   let qty = Number(document.getElementById('qty').value) || 0;
 
-  let note = document.getElementById('note').value || "";
+  let note = document.getElementById('note').value || '';
 
   let total = price * qty;
   let vat = Math.floor(total * 0.1);
@@ -238,47 +274,97 @@ function preview(){
   document.getElementById('preview').innerHTML = `
 
     <div class="doc-title">
-      견 적 서
+      見 積 書
     </div>
 
-    <div class="top-info">
+    <div class="top-grid">
 
-      <div class="left-info">
+      <div class="left-box">
 
-        <div class="info-row">
-          <strong>수신 :</strong> ${client}
+        <div class="row">
+          <div class="label">수 신 :</div>
+          <div>${client}</div>
         </div>
 
-        <div class="info-row">
-          <strong>Email :</strong> ${email}
+        <div class="row">
+          <div class="label">참 조 :</div>
+          <div>${phone}</div>
         </div>
 
-        <div class="info-row">
-          <strong>연락처 :</strong> ${phone}
+        <div class="notice">
+          下記와 같이 見積 드립니다.
         </div>
 
       </div>
 
-      <div class="right-info">
+      <div class="right-box">
 
-        <div><strong>(주)골프존</strong></div>
-        <div>서울특별시 강남구</div>
-        <div>TEL : 02-0000-0000</div>
-        <div>사업자등록번호 : 000-00-00000</div>
+        <div class="row2">
+          <div class="label2">사업자번호</div>
+          <div class="value2">122-87-00053</div>
+        </div>
+
+        <div class="row2">
+          <div class="label2">회 사 명</div>
+          <div class="value2">(주)골프존</div>
+        </div>
+
+        <div class="row2">
+          <div class="label2">주 소</div>
+          <div class="value2">서울특별시 강남구 영동대로 735</div>
+        </div>
+
+        <div class="row2">
+          <div class="label2">대표이사</div>
+          <div class="value2">박강수</div>
+        </div>
+
+        <div class="row2">
+          <div class="label2">담 당 자</div>
+          <div class="value2">김만식 센터장</div>
+        </div>
+
+        <div class="row2">
+          <div class="label2">전 화</div>
+          <div class="value2">010-2382-0313</div>
+        </div>
+
+        <div class="row2">
+          <div class="label2">e-Mail</div>
+          <div class="value2">kimms@gnsvce.com</div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="middle-area">
+
+      <div class="middle-row">
+        <div class="middle-label">공급가 :</div>
+        <div>₩ ${total.toLocaleString()}</div>
+      </div>
+
+      <div class="middle-row">
+        <div class="middle-label">발행일 :</div>
         <div>${today}</div>
+      </div>
 
+      <div class="middle-row">
+        <div class="middle-label">유효일 :</div>
+        <div>견적 후 10일</div>
       </div>
 
     </div>
 
-    <div class="price-box">
+    <div class="sum-box">
 
-      <div class="price-title">
+      <div class="sum-title">
         견적금액 합계
       </div>
 
-      <div class="price-total">
-        ₩ ${final.toLocaleString()}
+      <div class="sum-price">
+        一金 ₩ ${final.toLocaleString()} 원정
       </div>
 
     </div>
@@ -286,44 +372,46 @@ function preview(){
     <table class="quote-table">
 
       <tr>
-        <th>품목</th>
-        <th>단가</th>
+        <th>NO</th>
+        <th>품명</th>
+        <th>세부내용</th>
+        <th>단 가</th>
         <th>수량</th>
-        <th>금액</th>
+        <th>금 액</th>
+        <th>비고</th>
       </tr>
 
       <tr>
+        <td>1</td>
         <td>${item}</td>
+        <td>${detail}</td>
         <td>${price.toLocaleString()}</td>
         <td>${qty}</td>
         <td>${total.toLocaleString()}</td>
+        <td>공임포함</td>
+      </tr>
+
+      <tr>
+        <td colspan="5" class="total-label">
+          합계(VAT 포함)
+        </td>
+
+        <td colspan="2" class="total-price">
+          ₩ ${final.toLocaleString()}
+        </td>
       </tr>
 
     </table>
 
-    <div class="bottom-area">
+    <div class="note-area">
 
-      <p>
-        공급가액 : ₩ ${total.toLocaleString()}
-      </p>
+      <div class="note-title">
+        &lt; 특이사항 &gt;
+      </div>
 
-      <p>
-        부가세(VAT) : ₩ ${vat.toLocaleString()}
-      </p>
-
-      <p>
-        <strong>총 합계 : ₩ ${final.toLocaleString()}</strong>
-      </p>
-
-      <hr>
-
-      <p>
-        <strong>비고</strong>
-      </p>
-
-      <p>
+      <div class="note-box">
         ${note}
-      </p>
+      </div>
 
     </div>
 
@@ -335,14 +423,14 @@ async function sendEmail(){
 
   let email = document.getElementById('email').value;
 
-  if(!email || !email.includes("@")){
-    alert("올바른 이메일을 입력하세요");
+  if(!email || !email.includes('@')){
+    alert('올바른 이메일을 입력하세요');
     return;
   }
 
   try{
 
-    let element = document.getElementById("preview");
+    let element = document.getElementById('preview');
 
     if(!element.innerHTML){
       preview();
@@ -350,7 +438,7 @@ async function sendEmail(){
 
     let canvas = await html2canvas(element);
 
-    let imageData = canvas.toDataURL("image/png");
+    let imageData = canvas.toDataURL('image/png');
 
     let data = {
       client: document.getElementById('client').value,
@@ -359,34 +447,26 @@ async function sendEmail(){
     };
 
     let res = await fetch('/api/send', {
-
       method:'POST',
-
       headers:{
         'Content-Type':'application/json'
       },
-
       body:JSON.stringify(data)
-
     });
 
     let result = await res.json();
 
     if(result.success){
-
-      document.getElementById('result').innerText = "✅ 발송 완료";
-
+      document.getElementById('result').innerText = '✅ 발송 완료';
     }else{
-
-      document.getElementById('result').innerText = "❌ 발송 실패";
-
+      document.getElementById('result').innerText = '❌ 발송 실패';
     }
 
   }catch(error){
 
     console.log(error);
 
-    document.getElementById('result').innerText = "❌ 서버 오류 발생";
+    document.getElementById('result').innerText = '❌ 서버 오류 발생';
 
   }
 
@@ -396,3 +476,4 @@ async function sendEmail(){
 
 </body>
 </html>
+```
