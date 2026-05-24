@@ -432,6 +432,9 @@ function preview(){
   const qtys =
   document.querySelectorAll('.item-qty');
 
+  const notes =
+  document.querySelectorAll('.item-note');
+
   let rows = '';
 
   let total = 0;
@@ -457,7 +460,7 @@ function preview(){
         <td>${price.toLocaleString()}</td>
         <td>${qty}</td>
         <td>₩${amount.toLocaleString()}</td>
-        <td>공임비 포함</td>
+        <td>${notes[i].value || ''}</td>
 
       </tr>
 
