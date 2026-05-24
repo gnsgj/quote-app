@@ -134,10 +134,10 @@ button{
 }
 
 .middle-info{
-  margin-top:34px;
+  margin-top:20px;
   margin-bottom:8px;
   font-size:14px;
-  line-height:2.2;
+  line-height:1.9;
 }
 
 .blue-line{
@@ -188,7 +188,7 @@ button{
 }
 
 .blank-row td{
-  height:39px;
+  height:31px;
 }
 
 .bottom-total td{
@@ -217,6 +217,13 @@ button{
   margin-top:15px;
   font-size:11px;
   color:#444;
+}
+
+.underline-text{
+  display:inline-block;
+  border-bottom:1px solid #000;
+  padding-bottom:0px;
+  line-height:1.2;
 }
 
 @media(max-width:768px){
@@ -376,11 +383,7 @@ function preview(){
 
       <td class="left-area">
 
-        <div style="
-        display:inline-block;
-        border-bottom:1px solid #000;
-        padding-bottom:2px;
-        ">
+        <div class="underline-text">
 
           <strong>수&nbsp;&nbsp;신</strong>
           :
@@ -399,11 +402,7 @@ function preview(){
 
         <div class="middle-info">
 
-          <div style="
-          display:inline-block;
-          border-bottom:1px solid #000;
-          padding-bottom:2px;
-          ">
+          <div class="underline-text">
 
             <strong>공급가</strong>
             :
