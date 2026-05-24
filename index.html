@@ -17,14 +17,13 @@ body{
   font-family:'Malgun Gothic', sans-serif;
 }
 
-/* =========================
-   모바일 입력폼
-========================= */
+/* 입력폼 */
 
 .form-area{
 
   max-width:500px;
   margin:auto;
+
   background:#fff;
 
   padding:20px;
@@ -43,6 +42,7 @@ body{
 input, textarea{
 
   width:100%;
+
   box-sizing:border-box;
 
   padding:12px;
@@ -60,6 +60,7 @@ input, textarea{
 button{
 
   width:100%;
+
   padding:14px;
 
   margin-top:10px;
@@ -79,25 +80,30 @@ button{
 }
 
 #result{
+
   margin-top:15px;
+
   font-weight:bold;
+
 }
 
-/* =========================
-   A4 영역
-========================= */
+/* A4 */
 
 .preview-wrapper{
+
   overflow:auto;
+
   margin-top:40px;
+
 }
 
 .preview{
 
   width:210mm;
+
   min-height:297mm;
 
-  background:#f8f5ef;
+  background:#ffffff;
 
   margin:auto;
 
@@ -111,12 +117,16 @@ button{
 
 }
 
-/* 상단 라인 */
+/* 파란라인 */
 
 .top-line{
+
   height:4px;
+
   background:#2f5d99;
+
   margin-bottom:25px;
+
 }
 
 /* 제목 */
@@ -124,6 +134,7 @@ button{
 .title-area{
 
   position:relative;
+
   margin-bottom:25px;
 
 }
@@ -145,6 +156,7 @@ button{
   position:absolute;
 
   right:0;
+
   top:0;
 
   width:110px;
@@ -156,6 +168,7 @@ button{
 .top-table{
 
   width:100%;
+
   border-collapse:collapse;
 
   margin-bottom:25px;
@@ -165,22 +178,27 @@ button{
 .left-area{
 
   width:46%;
+
   vertical-align:top;
 
   font-size:14px;
+
   line-height:2.2;
 
 }
 
 .right-area{
+
   width:54%;
+
 }
 
-/* 우측 회사정보 */
+/* 회사정보 */
 
 .company-table{
 
   width:100%;
+
   border-collapse:collapse;
 
   font-size:12px;
@@ -205,19 +223,21 @@ button{
 
 }
 
-/* 중간 공급정보 */
+/* 공급정보 */
 
 .middle-info{
 
   margin-top:10px;
+
   margin-bottom:25px;
 
   font-size:14px;
+
   line-height:2;
 
 }
 
-/* 구분라인 */
+/* 중간 파란줄 */
 
 .blue-line{
 
@@ -229,11 +249,12 @@ button{
 
 }
 
-/* 합계 테이블 */
+/* 합계 */
 
 .sum-table{
 
   width:100%;
+
   border-collapse:collapse;
 
   margin-bottom:0;
@@ -256,7 +277,7 @@ button{
 
 }
 
-/* 품목 테이블 */
+/* 품목 */
 
 .quote-table{
 
@@ -288,10 +309,12 @@ button{
 }
 
 .blank-row td{
+
   height:28px;
+
 }
 
-/* 하단 합계 */
+/* 하단합계 */
 
 .bottom-total td{
 
@@ -324,8 +347,11 @@ button{
 }
 
 .red{
+
   color:red;
+
   font-weight:bold;
+
 }
 
 /* 하단문구 */
@@ -363,22 +389,22 @@ button{
 
 <body>
 
-<!-- =========================
-     입력폼
-========================= -->
-
 <div class="form-area">
 
 <h2>견적서 작성</h2>
 
 <input id="client" placeholder="수신처">
+
 <input id="email" placeholder="이메일">
+
 <input id="phone" placeholder="연락처">
 
 <input id="item" placeholder="품목명">
+
 <input id="detail" placeholder="세부내용">
 
 <input id="price" type="number" placeholder="단가">
+
 <input id="qty" type="number" placeholder="수량">
 
 <textarea id="note" rows="5" placeholder="특이사항"></textarea>
@@ -390,10 +416,6 @@ button{
 <p id="result"></p>
 
 </div>
-
-<!-- =========================
-     미리보기
-========================= -->
 
 <div class="preview-wrapper">
 
@@ -455,13 +477,24 @@ function preview(){
 
     <tr>
 
-      <!-- 좌측 -->
-
       <td class="left-area">
 
         <div>
+
           수 신 :
-          <strong>${client}</strong>
+
+          <span style="
+          font-weight:bold;
+          border-bottom:1px solid #000;
+          padding-bottom:2px;
+          display:inline-block;
+          min-width:180px;
+          ">
+
+          ${client}
+
+          </span>
+
         </div>
 
         <div>
@@ -474,8 +507,6 @@ function preview(){
         </div>
 
       </td>
-
-      <!-- 우측 -->
 
       <td class="right-area">
 
@@ -524,13 +555,24 @@ function preview(){
 
   </table>
 
-  <!-- 중간정보 -->
-
   <div class="middle-info">
 
     <div>
+
       <strong>공급가 :</strong>
+
+      <span style="
+      font-weight:bold;
+      border-bottom:1px solid #000;
+      padding-bottom:2px;
+      display:inline-block;
+      min-width:220px;
+      ">
+
       ₩ ${total.toLocaleString()} (VAT 포함)
+
+      </span>
+
     </div>
 
     <div>
@@ -546,8 +588,6 @@ function preview(){
   </div>
 
   <div class="blue-line"></div>
-
-  <!-- 합계 -->
 
   <table class="sum-table">
 
@@ -572,8 +612,6 @@ function preview(){
     </tr>
 
   </table>
-
-  <!-- 품목 -->
 
   <table class="quote-table">
 
@@ -637,8 +675,6 @@ function preview(){
 
   </table>
 
-  <!-- 특이사항 -->
-
   <div class="note-box">
 
     <div style="margin-bottom:10px;">
@@ -658,6 +694,9 @@ function preview(){
   <div class="footer">
     * 상기 견적에 대하여 외부 유출이 되지 않도록 협조 바랍니다.
   </div>
+
+  <div class="top-line"
+  style="margin-top:20px;"></div>
 
   `;
 
