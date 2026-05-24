@@ -128,7 +128,7 @@ button{
   vertical-align:top;
   font-size:14px;
   line-height:2;
-  padding-top:30px;
+  padding-top:18px;
 }
 
 .right-area{
@@ -159,8 +159,8 @@ button{
 /* 공급정보 */
 
 .middle-info{
-  margin-top:14px;
-  margin-bottom:16px;
+  margin-top:8px;
+  margin-bottom:8px;
   font-size:14px;
   line-height:2;
 }
@@ -265,8 +265,6 @@ button{
 
 <body>
 
-<!-- 입력폼 -->
-
 <div class="form-area">
 
 <h2>견적서 작성</h2>
@@ -291,8 +289,6 @@ button{
 
 </div>
 
-<!-- 미리보기 -->
-
 <div class="preview-wrapper">
 
 <div class="preview" id="preview"></div>
@@ -300,6 +296,68 @@ button{
 </div>
 
 <script>
+
+function numberToKorean(num){
+
+  const units = ['', '만', '억', '조'];
+  const nums = ['', '일', '이', '삼', '사', '오', '육', '칠', '팔', '구'];
+  const smallUnits = ['', '십', '백', '천'];
+
+  let result = '';
+  let unitIndex = 0;
+
+  while(num > 0){
+
+    let chunk = num % 10000;
+
+    if(chunk > 0){
+
+      let chunkText = '';
+      let digitIndex = 0;
+
+      while(chunk > 0){
+
+        let digit = chunk % 10;
+
+        if(digit > 0){
+
+          if(!(digit === 1 && digitIndex > 0)){
+
+            chunkText =
+            nums[digit] +
+            smallUnits[digitIndex] +
+            chunkText;
+
+          }else{
+
+            chunkText =
+            smallUnits[digitIndex] +
+            chunkText;
+
+          }
+
+        }
+
+        chunk = Math.floor(chunk / 10);
+        digitIndex++;
+
+      }
+
+      result =
+      chunkText +
+      units[unitIndex] +
+      result;
+
+    }
+
+    num = Math.floor(num / 10000);
+    unitIndex++;
+
+  }
+
+  return result || '영';
+
+}
 
 function preview(){
 
@@ -333,6 +391,9 @@ function preview(){
 
   let final = total + vat;
 
+  let koreanMoney =
+  numberToKorean(final);
+
   let today = new Date().toLocaleDateString();
 
   document.getElementById('preview').innerHTML = `
@@ -353,18 +414,18 @@ function preview(){
 
     <tr>
 
-      <!-- 좌측 -->
-
       <td class="left-area">
 
         <div>
 
           <span style="
           font-weight:bold;
+          display:inline-block;
           border-bottom:1px solid #000;
-          padding-bottom:1px;
+          padding-bottom:2px;
+          line-height:1;
           ">
-          수 신
+          수&nbsp;&nbsp;신
           </span>
 
           :
@@ -383,11 +444,7 @@ function preview(){
 
       </td>
 
-      <!-- 우측 -->
-
       <td class="right-area">
-
-        <!-- 상단 회사정보 -->
 
         <table class="company-table">
 
@@ -413,9 +470,7 @@ function preview(){
 
         </table>
 
-        <div style="height:16px;"></div>
-
-        <!-- 하단 담당자 -->
+        <div style="height:10px;"></div>
 
         <table class="company-table">
 
@@ -442,16 +497,16 @@ function preview(){
 
   </table>
 
-  <!-- 공급정보 -->
-
   <div class="middle-info">
 
     <div>
 
       <span style="
       font-weight:bold;
+      display:inline-block;
       border-bottom:1px solid #000;
-      padding-bottom:1px;
+      padding-bottom:2px;
+      line-height:1;
       ">
       공급가
       </span>
@@ -478,8 +533,6 @@ function preview(){
 
   <div class="blue-line"></div>
 
-  <!-- 합계 -->
-
   <table class="sum-table">
 
     <tr>
@@ -492,8 +545,11 @@ function preview(){
         一金
       </td>
 
-      <td style="font-size:24px;">
-        ₩ ${final.toLocaleString()}
+      <td style="
+      font-size:24px;
+      letter-spacing:2px;
+      ">
+        ${koreanMoney}
       </td>
 
       <td style="width:12%;">
@@ -503,8 +559,6 @@ function preview(){
     </tr>
 
   </table>
-
-  <!-- 품목 -->
 
   <table class="quote-table">
 
@@ -566,8 +620,6 @@ function preview(){
     </tr>
 
   </table>
-
-  <!-- 특이사항 -->
 
   <div class="note-box">
 
