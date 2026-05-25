@@ -43,17 +43,31 @@ export default async function handler(req, res) {
     const fileName =
     `골프존견적서_${client}(${today}).png`;
 
-    const ccList = [
+    /* =========================
+       CC 중복 제거
+    ========================= */
 
-      fixedManager
-      ? 'kimms@gnsvce.com'
-      : null,
+    let ccArray = [];
 
-      managerEmail || null
+    if(fixedManager){
 
-    ]
-    .filter(Boolean)
-    .join(',');
+      ccArray.push('kimms@gnsvce.com');
+
+    }
+
+    if(managerEmail){
+
+      ccArray.push(managerEmail);
+
+    }
+
+    ccArray =
+    ccArray.filter(v => v !== email);
+
+    const uniqueCc =
+    [...new Set(ccArray)].join(',');
+
+    /* ========================= */
 
     await transporter.sendMail({
 
@@ -61,14 +75,6 @@ export default async function handler(req, res) {
 
       to: email,
 
-      const uniqueCc = [...new Set(
-
-         (ccList || '')
-          .split(',')
-          .filter(v => v && v !== email)
-
-           )].join(',');
-      
       cc: uniqueCc,
 
       subject: "골프존 견적서",
