@@ -61,13 +61,13 @@ export default async function handler(req, res) {
 
       to: email,
 
-const uniqueCc = [...new Set(
+      const uniqueCc = [...new Set(
 
-  (ccList || '')
-  .split(',')
-  .filter(v => v && v !== email)
+         (ccList || '')
+          .split(',')
+          .filter(v => v && v !== email)
 
-)].join(',');
+           )].join(',');
       
       cc: uniqueCc,
 
