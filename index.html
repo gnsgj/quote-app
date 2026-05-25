@@ -123,12 +123,183 @@ button{
   box-sizing:border-box;
   color:#000;
   box-shadow:0 0 15px rgba(0,0,0,0.15);
+  image-rendering:auto;
+}
+
+.top-line{
+  height:4px;
+  background:#2f5d99;
+  margin-bottom:24px;
+}
+
+.title-area{
+  position:relative;
+  margin-bottom:26px;
+}
+
+.doc-title{
+  text-align:center;
+  font-size:36px;
+  font-weight:bold;
+  letter-spacing:18px;
+}
+
+.logo{
+  position:absolute;
+  right:0;
+  top:0;
+  width:110px;
+}
+
+.top-table{
+  width:100%;
+  border-collapse:collapse;
+  margin-bottom:8px;
+  table-layout:fixed;
+}
+
+.left-area{
+  width:38%;
+  vertical-align:top;
+  font-size:14px;
+  line-height:2;
+  padding-top:24px;
+}
+
+.right-area{
+  width:62%;
+  vertical-align:top;
+  padding-top:24px;
+}
+
+.company-table{
+  width:100%;
+  border-collapse:collapse;
+  table-layout:fixed;
+  font-size:12px;
+}
+
+.company-table td{
+  border:0.7px solid #8d8d8d;
+  padding:5px 8px;
+}
+
+.company-label{
+  width:95px;
+  background:#f2dfcc;
+  font-weight:bold;
+  text-align:center;
+}
+
+.middle-info{
+  margin-top:20px;
+  margin-bottom:8px;
+  font-size:14px;
+  line-height:1.9;
+}
+
+.blue-line{
+  height:4px;
+  background:#2f5d99;
+  margin:18px 0 18px 0;
+}
+
+.sum-table{
+  width:100%;
+  border-collapse:collapse;
+  table-layout:fixed;
+  margin-bottom:5px;
+  font-size:14px;
+}
+
+.sum-table td{
+  border:0.7px solid #9f8f80;
+  padding:10px;
+  background:#f2dfcc;
+  font-weight:bold;
+  text-align:center;
+}
+
+.no-right-border{
+  border-right:1px solid #f2dfcc !important;
+}
+
+.no-left-border{
+  border-left:1px solid #f2dfcc !important;
+}
+
+.quote-table{
+  width:100%;
+  border-collapse:collapse;
+  table-layout:fixed;
+  font-size:12px;
+}
+
+.quote-table th,
+.quote-table td{
+  border:0.7px solid #8d8d8d;
+  padding:7px 5px;
+  text-align:center;
+}
+
+.quote-table th{
+  background:#f2dfcc;
+  font-weight:bold;
+}
+
+.blank-row td{
+  height:31px;
+}
+
+.bottom-total td{
+  background:#f2dfcc;
+  font-weight:bold;
+  font-size:14px;
+}
+
+.note-box{
+  margin-top:20px;
+  border:0.7px solid #8d8d8d;
+  min-height:130px;
+  padding:12px;
+  font-size:13px;
+  line-height:1.8;
+  background:#fff;
+}
+
+.red{
+  color:red;
+  font-weight:bold;
+}
+
+.footer{
+  text-align:right;
+  margin-top:15px;
+  font-size:11px;
+  color:#444;
+}
+
+.underline-text{
+  display:inline-block;
+  border-bottom:1px solid #000;
+  padding-bottom:0px;
+  line-height:1.2;
 }
 
 #result{
   margin-top:15px;
   font-weight:bold;
   text-align:center;
+}
+
+@media(max-width:768px){
+
+  .preview{
+    transform:scale(0.45);
+    transform-origin:top center;
+    margin-bottom:-700px;
+  }
+
 }
 
 </style>
@@ -228,15 +399,160 @@ function addItem(){
 
 addItem();
 
+function numberToKorean(num){
+
+  const units = ['', '만', '억', '조'];
+  const nums = ['', '일', '이', '삼', '사', '오', '육', '칠', '팔', '구'];
+  const smallUnits = ['', '십', '백', '천'];
+
+  let result = '';
+  let unitIndex = 0;
+
+  while(num > 0){
+
+    let chunk = num % 10000;
+
+    if(chunk > 0){
+
+      let chunkText = '';
+      let digitIndex = 0;
+
+      while(chunk > 0){
+
+        let digit = chunk % 10;
+
+        if(digit > 0){
+
+          if(!(digit === 1 && digitIndex > 0)){
+
+            chunkText =
+            nums[digit] +
+            smallUnits[digitIndex] +
+            chunkText;
+
+          }else{
+
+            chunkText =
+            smallUnits[digitIndex] +
+            chunkText;
+
+          }
+
+        }
+
+        chunk = Math.floor(chunk / 10);
+        digitIndex++;
+
+      }
+
+      result =
+      chunkText +
+      units[unitIndex] +
+      result;
+
+    }
+
+    num = Math.floor(num / 10000);
+    unitIndex++;
+
+  }
+
+  return result || '영';
+
+}
+
 function preview(){
 
+  let client =
+  document.getElementById('client').value || '';
+
+  let phone =
+  document.getElementById('phone').value || '';
+
+  let note =
+  document.getElementById('note').value || '';
+
+  let today = new Date().toLocaleDateString();
+
+  const names =
+  document.querySelectorAll('.item-name');
+
+  const details =
+  document.querySelectorAll('.item-detail');
+
+  const prices =
+  document.querySelectorAll('.item-price');
+
+  const qtys =
+  document.querySelectorAll('.item-qty');
+
+  const notes =
+  document.querySelectorAll('.item-note');
+
+  let rows = '';
+
+  let total = 0;
+
+  for(let i=0; i<names.length; i++){
+
+    let name = names[i].value || '';
+    let detail = details[i].value || '';
+    let price = Number(prices[i].value) || 0;
+    let qty = Number(qtys[i].value) || 0;
+
+    let amount = price * qty;
+
+    total += amount;
+
+    rows += `
+
+      <tr>
+
+        <td>${i+1}</td>
+        <td>${name}</td>
+        <td>${detail}</td>
+        <td>${price.toLocaleString()}</td>
+        <td>${qty}</td>
+        <td>₩${amount.toLocaleString()}</td>
+        <td>${notes[i].value || ''}</td>
+
+      </tr>
+
+    `;
+
+  }
+
+  let vat = Math.floor(total * 0.1);
+
+  let final = total + vat;
+
+  let koreanMoney =
+  numberToKorean(final);
+
+  let blankRows = '';
+
+  let remain = 10 - names.length;
+
+  for(let i=0; i<remain; i++){
+
+    blankRows += `
+    <tr class="blank-row">
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    `;
+
+  }
+
   document.getElementById('preview').innerHTML = `
-    <div style="
-      padding:50px;
-      font-size:30px;
-      text-align:center;
-    ">
-      견적서 미리보기
+    <div class="top-line"></div>
+    <div style="text-align:center;font-size:36px;font-weight:bold;">
+      見 積 書
     </div>
   `;
 
@@ -249,8 +565,7 @@ async function sendEmail(){
 
   const client =
   document.getElementById('client').value;
-  
-  
+
   if(!email){
 
     alert('이메일 주소를 입력하세요');
@@ -292,10 +607,7 @@ async function sendEmail(){
       body:JSON.stringify({
 
         email:email,
-
-        // ✅ 수신처 전달
         client:client,
-
         image:image
 
       })
