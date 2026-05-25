@@ -27,14 +27,18 @@ body{
 }
 
 .form-header{
-  display:flex;
-  align-items:center;
-  gap:14px;
   margin-bottom:24px;
   padding-bottom:14px;
   border-bottom:2px solid #2f5d99;
 }
 
+.header-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  margin-bottom:12px;
+}
+  
 .header-logo{
   width:120px;
   height:auto;
@@ -61,8 +65,7 @@ body{
 .header-version{
   font-size:11px;
   color:#999;
-  align-self:flex-start;
-  margin-top:4px;
+  margin-top:6px;
 }
 
 .item-box{
@@ -342,7 +345,15 @@ button{
 
 <div class="form-header">
 
-  <img src="gns.png" class="header-logo">
+  <div class="header-top">
+
+    <img src="gns.png" class="header-logo">
+
+    <div class="header-version">
+      2026.05
+    </div>
+
+  </div>
 
   <div class="header-text">
 
@@ -353,12 +364,6 @@ button{
     <div class="header-sub">
       견적서 온라인 발송 시스템
     </div>
-
-  </div>
-
-  <div class="header-version">
-    2026.05
-  </div>
 
 </div>
 
