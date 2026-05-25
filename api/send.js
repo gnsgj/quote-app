@@ -88,7 +88,7 @@ export default async function handler(req, res) {
 
         <br><br><br>
 
-  <div style="
+ <div style="
   color:#666;
   font-size:13px;
   line-height:1.5;
