@@ -86,9 +86,37 @@ export default async function handler(req, res) {
 
           감사합니다.
 
-        </div>
+        <br><br><br>
 
-      `,
+    <div style="
+      color:#666;
+      font-size:13px;
+      line-height:1.8;
+    ">
+
+      김만식<br><br>
+
+      센터장<br><br>
+
+      CS3팀 광주센터 | 지앤서비스<br>
+
+      ---------------------------------<br><br>
+
+      T: 042-932-2206<br>
+
+      M: 010-2382-0313<br>
+
+      E: kimms@gnsvce.com<br>
+
+      W: www.gnsvce.com<br><br>
+
+      광주광역시 광산구 산월동 854-6번지
+
+    </div>
+
+  </div>
+
+`,
 
       attachments: [
 
