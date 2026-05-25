@@ -61,7 +61,15 @@ export default async function handler(req, res) {
 
       to: email,
 
-      cc: ccList,
+     const uniqueCc = [...new Set(
+
+       ccList
+        .split(',')
+        .filter(v => v && v !== email)
+
+        )].join(',');
+      
+      cc: uniqueCc,
 
       subject: "골프존 견적서",
 
