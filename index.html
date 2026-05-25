@@ -333,7 +333,74 @@ button{
 
 <input id="client" placeholder="수신처">
 <input id="email" placeholder="이메일">
-<input id="phone" placeholder="참조">
+<div class="mail-box">
+
+  <div class="mail-title">
+    참조 메일 설정
+  </div>
+
+  <label class="mail-check">
+
+    <input
+      type="checkbox"
+      id="fixedManager"
+      checked
+    >
+
+    고정참조 김만식 센터장
+    (kimms@gnsvce.com)
+
+  </label>
+
+  <select id="managerEmail">
+
+    <option value="">
+      요청매니저 선택
+    </option>
+
+    <option value="rupanc@gnsvce.com">
+      이덕섭 매니저
+    </option>
+
+    <option value="bwk@gnsvce.com">
+      배우경 매니저
+    </option>
+
+    <option value="skywgb@gnsvce.com">
+      배우길 매니저
+    </option>
+
+    <option value="sctjswns@gnsvce.com">
+      김선준 매니저
+    </option>
+
+    <option value="s80794@gnsvce.com">
+      김동현 매니저
+    </option>
+
+    <option value="wkdwndnjs0511@gnsvce.com">
+      장주원 매니저
+    </option>
+
+    <option value="a85269@gnsvce.com">
+      김지석 매니저
+    </option>
+
+    <option value="yeop0312@gnsvce.com">
+      이신엽 매니저
+    </option>
+
+    <option value="leegh@gnsvce.com">
+      이경헌 매니저
+    </option>
+
+    <option value="oaktong1@gnsvce.com">
+      정진욱 매니저
+    </option>
+
+  </select>
+
+</div>
 
 <div id="items"></div>
 
@@ -804,14 +871,20 @@ async function sendEmail(){
 
       body:JSON.stringify({
 
-        email:email,
+  email:email,
 
-        client:
-        document.getElementById('client').value,
-        
-        image:image
+  client:
+  document.getElementById('client').value,
 
-      })
+  fixedManager:
+  document.getElementById('fixedManager').checked,
+
+  managerEmail:
+  document.getElementById('managerEmail').value,
+  
+  image:image
+
+})
 
     });
 
