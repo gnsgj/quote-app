@@ -78,9 +78,7 @@ body{
   margin-bottom:10px;
 }
 
-input,
-textarea,
-select{
+input, textarea{
   width:100%;
   box-sizing:border-box;
   padding:12px;
@@ -109,32 +107,6 @@ button{
 .delete-btn{
   background:#b33636;
   margin-top:0;
-}
-
-.mail-box{
-  border:1px solid #ddd;
-  border-radius:8px;
-  padding:14px;
-  margin-bottom:15px;
-  background:#fafafa;
-}
-
-.mail-title{
-  font-weight:bold;
-  margin-bottom:10px;
-}
-
-.mail-check{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  margin-bottom:14px;
-  font-size:14px;
-}
-
-.mail-check input{
-  width:auto;
-  margin:0;
 }
 
 .preview-wrapper{
@@ -179,10 +151,155 @@ button{
   width:110px;
 }
 
+.top-table{
+  width:100%;
+  border-collapse:collapse;
+  margin-bottom:8px;
+  table-layout:fixed;
+}
+
+.left-area{
+  width:38%;
+  vertical-align:top;
+  font-size:14px;
+  line-height:2;
+  padding-top:24px;
+}
+
+.right-area{
+  width:62%;
+  vertical-align:top;
+  padding-top:24px;
+}
+
+.company-table{
+  width:100%;
+  border-collapse:collapse;
+  table-layout:fixed;
+  font-size:12px;
+}
+
+.company-table td{
+  border:0.7px solid #8d8d8d;
+  padding:5px 8px;
+}
+
+.company-label{
+  width:95px;
+  background:#f2dfcc;
+  font-weight:bold;
+  text-align:center;
+}
+
+.middle-info{
+  margin-top:20px;
+  margin-bottom:8px;
+  font-size:14px;
+  line-height:1.9;
+}
+
+.blue-line{
+  height:4px;
+  background:#2f5d99;
+  margin:18px 0 18px 0;
+}
+
+.sum-table{
+  width:100%;
+  border-collapse:collapse;
+  table-layout:fixed;
+  margin-bottom:5px;
+  font-size:14px;
+}
+
+.sum-table td{
+  border:0.7px solid #9f8f80;
+  padding:10px;
+  background:#f2dfcc;
+  font-weight:bold;
+  text-align:center;
+}
+
+.no-right-border{
+  border-right:1px solid #f2dfcc !important;
+}
+
+.no-left-border{
+  border-left:1px solid #f2dfcc !important;
+}
+
+.quote-table{
+  width:100%;
+  border-collapse:collapse;
+  table-layout:fixed;
+  font-size:12px;
+}
+
+.quote-table th,
+.quote-table td{
+  border:0.7px solid #8d8d8d;
+  padding:7px 5px;
+  text-align:center;
+}
+
+.quote-table th{
+  background:#f2dfcc;
+  font-weight:bold;
+}
+
+.blank-row td{
+  height:31px;
+}
+
+.bottom-total td{
+  background:#f2dfcc;
+  font-weight:bold;
+  font-size:14px;
+}
+
+.note-box{
+  margin-top:20px;
+  border:0.7px solid #8d8d8d;
+  min-height:130px;
+  padding:12px;
+  font-size:13px;
+  line-height:1.8;
+  background:#fff;
+}
+
+.red{
+  color:red;
+  font-weight:bold;
+}
+
+.footer{
+  text-align:right;
+  margin-top:15px;
+  font-size:11px;
+  color:#444;
+}
+
+.underline-text{
+  display:inline-block;
+  border-bottom:1px solid #000;
+  padding-bottom:0px;
+  line-height:1.2;
+}
+
 #result{
   margin-top:15px;
   font-weight:bold;
   text-align:center;
+}
+
+@media(max-width:768px){
+
+  .preview{
+    transform:scale(0.45);
+    transform-origin:top center;
+    margin-bottom:-700px;
+  }
+
 }
 
 </style>
@@ -215,77 +332,8 @@ button{
 </div>
 
 <input id="client" placeholder="수신처">
-
 <input id="email" placeholder="이메일">
-
-<div class="mail-box">
-
-  <div class="mail-title">
-    참조 메일 설정
-  </div>
-
-  <label class="mail-check">
-
-    <input
-      type="checkbox"
-      id="fixedManager"
-      checked
-    >
-
-    고정참조 김만식 센터장
-    (kimms@gnsvce.com)
-
-  </label>
-
-  <select id="managerEmail">
-
-    <option value="">
-      요청매니저 선택
-    </option>
-
-    <option value="rupanc@gnsvce.com">
-      이덕섭 매니저
-    </option>
-
-    <option value="bwk@gnsvce.com">
-      배우경 매니저
-    </option>
-
-    <option value="skywgb@gnsvce.com">
-      배우길 매니저
-    </option>
-
-    <option value="sctjswns@gnsvce.com">
-      김선준 매니저
-    </option>
-
-    <option value="s80794@gnsvce.com">
-      김동현 매니저
-    </option>
-
-    <option value="wkdwndnjs0511@gnsvce.com">
-      장주원 매니저
-    </option>
-
-    <option value="a85269@gnsvce.com">
-      김지석 매니저
-    </option>
-
-    <option value="yeop0312@gnsvce.com">
-      이신엽 매니저
-    </option>
-
-    <option value="leegh@gnsvce.com">
-      이경헌 매니저
-    </option>
-
-    <option value="oaktong1@gnsvce.com">
-      정진욱 매니저
-    </option>
-
-  </select>
-
-</div>
+<input id="phone" placeholder="참조">
 
 <div id="items"></div>
 
@@ -351,20 +399,362 @@ function addItem(){
 
 addItem();
 
+function numberToKorean(num){
+
+  const units = ['', '만', '억', '조'];
+  const nums = ['', '일', '이', '삼', '사', '오', '육', '칠', '팔', '구'];
+  const smallUnits = ['', '십', '백', '천'];
+
+  let result = '';
+  let unitIndex = 0;
+
+  while(num > 0){
+
+    let chunk = num % 10000;
+
+    if(chunk > 0){
+
+      let chunkText = '';
+      let digitIndex = 0;
+
+      while(chunk > 0){
+
+        let digit = chunk % 10;
+
+        if(digit > 0){
+
+          if(!(digit === 1 && digitIndex > 0)){
+
+            chunkText =
+            nums[digit] +
+            smallUnits[digitIndex] +
+            chunkText;
+
+          }else{
+
+            chunkText =
+            smallUnits[digitIndex] +
+            chunkText;
+
+          }
+
+        }
+
+        chunk = Math.floor(chunk / 10);
+        digitIndex++;
+
+      }
+
+      result =
+      chunkText +
+      units[unitIndex] +
+      result;
+
+    }
+
+    num = Math.floor(num / 10000);
+    unitIndex++;
+
+  }
+
+  return result || '영';
+
+}
+
 function preview(){
 
+  let client =
+  document.getElementById('client').value || '';
+
+  let phone =
+  document.getElementById('phone').value || '';
+
+  let note =
+  document.getElementById('note').value || '';
+
+  let today = new Date().toLocaleDateString();
+
+  const names =
+  document.querySelectorAll('.item-name');
+
+  const details =
+  document.querySelectorAll('.item-detail');
+
+  const prices =
+  document.querySelectorAll('.item-price');
+
+  const qtys =
+  document.querySelectorAll('.item-qty');
+
+  const notes =
+  document.querySelectorAll('.item-note');
+
+  let rows = '';
+
+  let total = 0;
+
+  for(let i=0; i<names.length; i++){
+
+    let name = names[i].value || '';
+    let detail = details[i].value || '';
+    let price = Number(prices[i].value) || 0;
+    let qty = Number(qtys[i].value) || 0;
+
+    let amount = price * qty;
+
+    total += amount;
+
+    rows += `
+
+      <tr>
+
+        <td>${i+1}</td>
+        <td>${name}</td>
+        <td>${detail}</td>
+        <td>${price.toLocaleString()}</td>
+        <td>${qty}</td>
+        <td>₩${amount.toLocaleString()}</td>
+        <td>${notes[i].value || ''}</td>
+
+      </tr>
+
+    `;
+
+  }
+
+  let vat = Math.floor(total * 0.1);
+
+  let final = total + vat;
+
+  let koreanMoney =
+  numberToKorean(final);
+
+  let blankRows = '';
+
+  let remain = 10 - names.length;
+
+  for(let i=0; i<remain; i++){
+
+    blankRows += `
+    <tr class="blank-row">
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    `;
+
+  }
+
   document.getElementById('preview').innerHTML = `
-    <div class="top-line"></div>
 
-    <div class="title-area">
+  <div class="top-line"></div>
 
-      <div class="doc-title">
-        見 積 書
-      </div>
+  <div class="title-area">
 
-      <img class="logo" src="logo.png">
-
+    <div class="doc-title">
+      見 積 書
     </div>
+
+    <img class="logo" src="logo.png">
+
+  </div>
+
+  <table class="top-table">
+
+    <tr>
+
+      <td class="left-area">
+
+        <div class="underline-text">
+
+          <strong>수&nbsp;&nbsp;신</strong>
+          :
+          <strong>${client}</strong>
+
+        </div>
+
+        <div>
+          참 조 :
+          ${phone}
+        </div>
+
+        <div>
+          下記와 같이 見積 드립니다.
+        </div>
+
+        <div class="middle-info">
+
+          <div class="underline-text">
+
+            <strong>공급가</strong>
+            :
+
+            <strong>
+            ₩ ${total.toLocaleString()} (VAT 포함)
+            </strong>
+
+          </div>
+
+          <div>
+            <strong>발행일 :</strong>
+            ${today}
+          </div>
+
+          <div>
+            <strong>유효일 :</strong>
+            견적 후 10일
+          </div>
+
+        </div>
+
+      </td>
+
+      <td class="right-area">
+
+        <table class="company-table">
+
+          <tr>
+            <td class="company-label">사업자번호</td>
+            <td>122-87-00053</td>
+          </tr>
+
+          <tr>
+            <td class="company-label">회 사 명</td>
+            <td>(주)골프존</td>
+          </tr>
+
+          <tr>
+            <td class="company-label">주 소</td>
+            <td>서울특별시 강남구 영동대로 735</td>
+          </tr>
+
+          <tr>
+            <td class="company-label">대표이사</td>
+            <td>박강수</td>
+          </tr>
+
+        </table>
+
+        <div style="height:10px;"></div>
+
+        <table class="company-table">
+
+          <tr>
+            <td class="company-label">담당자</td>
+            <td>김만식 센터장</td>
+          </tr>
+
+          <tr>
+            <td class="company-label">전 화</td>
+            <td>010-2382-0313</td>
+          </tr>
+
+          <tr>
+            <td class="company-label">e-Mail</td>
+            <td>kimms@gnsvce.com</td>
+          </tr>
+
+        </table>
+
+      </td>
+
+    </tr>
+
+  </table>
+
+  <div class="blue-line"></div>
+
+  <table class="sum-table">
+
+    <tr>
+
+      <td style="width:22%;">
+        견적금액 합계
+      </td>
+
+      <td style="width:10%;" class="no-right-border">
+        一金
+      </td>
+
+      <td style="
+      font-size:24px;
+      letter-spacing:2px;
+      " class="no-left-border no-right-border">
+
+        ${koreanMoney}
+
+      </td>
+
+      <td style="width:12%;" class="no-left-border">
+        원정
+      </td>
+
+    </tr>
+
+  </table>
+
+  <table class="quote-table">
+
+    <tr>
+
+      <th style="width:40px;">NO</th>
+      <th>품명</th>
+      <th>세부내용</th>
+      <th style="width:80px;">단 가</th>
+      <th style="width:50px;">수량</th>
+      <th style="width:90px;">금 액</th>
+      <th>비고</th>
+
+    </tr>
+
+    ${rows}
+
+    ${blankRows}
+
+    <tr class="bottom-total">
+
+      <td colspan="3">
+        합계(VAT 포함)
+      </td>
+
+      <td colspan="4"
+      style="text-align:right; padding-right:15px;">
+
+        ₩ ${final.toLocaleString()}
+
+      </td>
+
+    </tr>
+
+  </table>
+
+  <div class="note-box">
+
+    <div style="margin-bottom:10px;">
+      <strong>&lt;특이사항&gt;</strong>
+    </div>
+
+    <div class="red">
+      ※ 본 견적서는 "공임비 + VAT" 포함 입니다
+    </div>
+
+    <div style="margin-top:8px;">
+      ${note}
+    </div>
+
+  </div>
+
+  <div class="footer">
+    * 상기 견적에 대하여 외부 유출이 되지 않도록 협조 바랍니다.
+  </div>
+
+  <div class="top-line"
+  style="margin-top:20px;"></div>
+
   `;
 
 }
@@ -388,7 +778,9 @@ async function sendEmail(){
   await html2canvas(preview,{
 
     scale:4,
+
     useCORS:true,
+
     backgroundColor:'#ffffff'
 
   });
@@ -416,13 +808,7 @@ async function sendEmail(){
 
         client:
         document.getElementById('client').value,
-
-        fixedManager:
-        document.getElementById('fixedManager').checked,
-
-        managerEmail:
-        document.getElementById('managerEmail').value,
-
+        
         image:image
 
       })
