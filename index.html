@@ -805,6 +805,10 @@ async function sendEmail(){
       body:JSON.stringify({
 
         email:email,
+
+        client:
+        document.getElementById('client').value,
+        
         image:image
 
       })
