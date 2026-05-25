@@ -550,10 +550,211 @@ function preview(){
   }
 
   document.getElementById('preview').innerHTML = `
-    <div class="top-line"></div>
-    <div style="text-align:center;font-size:36px;font-weight:bold;">
+
+  <div class="top-line"></div>
+
+  <div class="title-area">
+
+    <div class="doc-title">
       見 積 書
     </div>
+
+    <img class="logo" src="logo.png">
+
+  </div>
+
+  <table class="top-table">
+
+    <tr>
+
+      <td class="left-area">
+
+        <div class="underline-text">
+
+          <strong>수&nbsp;&nbsp;신</strong>
+          :
+          <strong>${client}</strong>
+
+        </div>
+
+        <div>
+          참 조 :
+          ${phone}
+        </div>
+
+        <div>
+          下記와 같이 見積 드립니다.
+        </div>
+
+        <div class="middle-info">
+
+          <div class="underline-text">
+
+            <strong>공급가</strong>
+            :
+
+            <strong>
+            ₩ ${total.toLocaleString()} (VAT 포함)
+            </strong>
+
+          </div>
+
+          <div>
+            <strong>발행일 :</strong>
+            ${today}
+          </div>
+
+          <div>
+            <strong>유효일 :</strong>
+            견적 후 10일
+          </div>
+
+        </div>
+
+      </td>
+
+      <td class="right-area">
+
+        <table class="company-table">
+
+          <tr>
+            <td class="company-label">사업자번호</td>
+            <td>122-87-00053</td>
+          </tr>
+
+          <tr>
+            <td class="company-label">회 사 명</td>
+            <td>(주)골프존</td>
+          </tr>
+
+          <tr>
+            <td class="company-label">주 소</td>
+            <td>서울특별시 강남구 영동대로 735</td>
+          </tr>
+
+          <tr>
+            <td class="company-label">대표이사</td>
+            <td>박강수</td>
+          </tr>
+
+        </table>
+
+        <div style="height:10px;"></div>
+
+        <table class="company-table">
+
+          <tr>
+            <td class="company-label">담당자</td>
+            <td>김만식 센터장</td>
+          </tr>
+
+          <tr>
+            <td class="company-label">전 화</td>
+            <td>010-2382-0313</td>
+          </tr>
+
+          <tr>
+            <td class="company-label">e-Mail</td>
+            <td>kimms@gnsvce.com</td>
+          </tr>
+
+        </table>
+
+      </td>
+
+    </tr>
+
+  </table>
+
+  <div class="blue-line"></div>
+
+  <table class="sum-table">
+
+    <tr>
+
+      <td style="width:22%;">
+        견적금액 합계
+      </td>
+
+      <td style="width:10%;" class="no-right-border">
+        一金
+      </td>
+
+      <td style="
+      font-size:24px;
+      letter-spacing:2px;
+      " class="no-left-border no-right-border">
+
+        ${koreanMoney}
+
+      </td>
+
+      <td style="width:12%;" class="no-left-border">
+        원정
+      </td>
+
+    </tr>
+
+  </table>
+
+  <table class="quote-table">
+
+    <tr>
+
+      <th style="width:40px;">NO</th>
+      <th>품명</th>
+      <th>세부내용</th>
+      <th style="width:80px;">단 가</th>
+      <th style="width:50px;">수량</th>
+      <th style="width:90px;">금 액</th>
+      <th>비고</th>
+
+    </tr>
+
+    ${rows}
+
+    ${blankRows}
+
+    <tr class="bottom-total">
+
+      <td colspan="3">
+        합계(VAT 포함)
+      </td>
+
+      <td colspan="4"
+      style="text-align:right; padding-right:15px;">
+
+        ₩ ${final.toLocaleString()}
+
+      </td>
+
+    </tr>
+
+  </table>
+
+  <div class="note-box">
+
+    <div style="margin-bottom:10px;">
+      <strong>&lt;특이사항&gt;</strong>
+    </div>
+
+    <div class="red">
+      ※ 본 견적서는 "공임비 + VAT" 포함 입니다
+    </div>
+
+    <div style="margin-top:8px;">
+      ${note}
+    </div>
+
+  </div>
+
+  <div class="footer">
+    * 상기 견적에 대하여 외부 유출이 되지 않도록 협조 바랍니다.
+  </div>
+
+  <div class="top-line"
+  style="margin-top:20px;"></div>
+
   `;
 
 }
@@ -562,9 +763,6 @@ async function sendEmail(){
 
   const email =
   document.getElementById('email').value;
-
-  const client =
-  document.getElementById('client').value;
 
   if(!email){
 
@@ -607,7 +805,6 @@ async function sendEmail(){
       body:JSON.stringify({
 
         email:email,
-        client:client,
         image:image
 
       })
