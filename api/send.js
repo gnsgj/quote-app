@@ -12,6 +12,10 @@ export default async function handler(req, res) {
       image
     } = req.body;
 
+    /* =========================
+       메일 설정
+    ========================= */
+
     let transporter =
     nodemailer.createTransport({
 
@@ -31,6 +35,10 @@ export default async function handler(req, res) {
 
     });
 
+    /* =========================
+       이미지 처리
+    ========================= */
+
     const base64Data =
     image.replace(
       /^data:image\/png;base64,/,
@@ -44,7 +52,7 @@ export default async function handler(req, res) {
     `골프존견적서_${client}(${today}).png`;
 
     /* =========================
-       CC 중복 제거
+       참조메일 중복 제거
     ========================= */
 
     let ccArray = [];
@@ -177,28 +185,7 @@ W: www.gnsvce.com
        구글시트 발송이력 저장
     ========================= */
 
-    const params =
-    new URLSearchParams({
-
-      client: client,
-
-      email: email,
-
-      manager:
-      managerEmail || "김만식",
-
-      total:
-      req.body.total || "",
-
-      summary:
-      req.body.summary || "",
-
-      note:
-      req.body.note || ""
-
-    });
-
-    const sheetResponse =
+    const response =
     await fetch(
 
       'https://script.google.com/macros/s/AKfycbx3xkm-cxudWnpBVq7e2LKrJkNdWXJS--3MCI-AqYs0fVQfdS0ZrbkLI9Ef1mU29lYv/exec',
@@ -207,16 +194,33 @@ W: www.gnsvce.com
 
         method:'POST',
 
-        body:params
+        headers:{
+          'Content-Type':
+          'application/x-www-form-urlencoded'
+        },
+
+        body:
+
+          `client=${encodeURIComponent(client)}` +
+
+          `&email=${encodeURIComponent(email)}` +
+
+          `&manager=${encodeURIComponent(managerEmail || "김만식")}` +
+
+          `&total=${encodeURIComponent(req.body.total || "")}` +
+
+          `&summary=${encodeURIComponent(req.body.summary || "")}` +
+
+          `&note=${encodeURIComponent(req.body.note || "")}`
 
       }
 
     );
 
-    const result =
-    await sheetResponse.text();
+    const text =
+    await response.text();
 
-    if(result !== 'success'){
+    if(!text.includes('success')){
 
       throw new Error(
         '구글시트 저장 실패'
