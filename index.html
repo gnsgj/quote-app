@@ -696,7 +696,10 @@ function preview(){
 
     let name = names[i].value || '';
     let detail = details[i].value || '';
-    let price = Number(prices[i].value) || 0;
+    let price =
+Number(
+  prices[i].value.replace(/,/g,'')
+) || 0;
     let qty = Number(qtys[i].value) || 0;
 
     let amount = price * qty;
