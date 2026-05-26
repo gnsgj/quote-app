@@ -346,6 +346,68 @@ button{
   overflow-y:auto;
   background:#fff;
 } 
+
+.item-search{
+
+  border:2px solid #2f5d99 !important;
+
+  background:#f7fbff;
+
+  font-weight:bold;
+
+  padding:13px 12px !important;
+
+  font-size:14px;
+
+  box-shadow:0 2px 6px rgba(47,93,153,0.12);
+
+}
+
+.item-search::placeholder{
+
+  color:#d93b3b;
+
+  font-size:11px;
+
+  font-weight:bold;
+
+  letter-spacing:-0.3px;
+
+}
+
+.search-results{
+
+  border:2px solid #2f5d99;
+
+  border-radius:8px;
+
+  overflow:hidden;
+
+  margin-top:-4px;
+
+  margin-bottom:12px;
+
+  max-height:260px;
+
+  overflow-y:auto;
+
+  background:#ffffff;
+
+  box-shadow:0 4px 12px rgba(0,0,0,0.12);
+
+}
+
+.search-results div{
+
+  transition:0.15s;
+
+}
+
+.search-results div:hover{
+
+  background:#edf4ff !important;
+
+}
   
 </style>
 </head>
@@ -509,9 +571,9 @@ function addItem(){
       품목 ${itemCount}
     </div>
 
-   <input
+  <input
   class="item-search"
-  placeholder="품목 검색"
+  placeholder="검색 품목 한칸씩 띄우고 입력  (예) gdr 측면"
   oninput="searchItem(this)"
 >
 
@@ -1013,10 +1075,13 @@ function searchItem(input){
     const div =
     document.createElement('div');
 
-    div.style.padding = '8px';
-    div.style.borderBottom = '1px solid #ddd';
-    div.style.cursor = 'pointer';
-    div.style.background = '#fff';
+div.style.padding = '10px 12px';
+
+div.style.borderBottom = '1px solid #d8e3f3';
+
+div.style.cursor = 'pointer';
+
+div.style.background = '#fff';
 
     div.innerHTML = `
       <strong>${item.part}</strong><br>
