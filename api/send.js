@@ -173,34 +173,42 @@ W: www.gnsvce.com
 
     // 구글시트 발송이력 저장
 
-await fetch(
-  'https://script.google.com/macros/s/AKfycbx3xkm-cxudWnpBVq7e2LKrJkNdWXJS--3MCI-AqYs0fVQfdS0ZrbkLI9Ef1mU29lYv/exec',
-  {
+try{
 
-    method:'POST',
+  await fetch(
+    'https://script.google.com/macros/s/AKfycbx3xkm-cxudWnpBVq7e2LKrJkNdWXJS--3MCI-AqYs0fVQfdS0ZrbkLI9Ef1mU29lYv/exec',
+    {
 
-    headers:{
-      'Content-Type':'application/json'
-    },
+      method:'POST',
 
-    body:JSON.stringify({
+      headers:{
+        'Content-Type':'application/json'
+      },
 
-      client: client,
+      body:JSON.stringify({
 
-      email: email,
+        client: client,
 
-      manager: managerEmail || "김만식",
+        email: email,
 
-      total: req.body.total || "",
+        manager: managerEmail || "김만식",
 
-      summary: req.body.summary || "",
+        total: req.body.total || "",
 
-      note: req.body.note || ""
+        summary: req.body.summary || "",
 
-    })
+        note: req.body.note || ""
 
-  }
-);
+      })
+
+    }
+  );
+
+}catch(err){
+
+  console.log('시트 저장 실패');
+
+}
 
 const sheetResponse =
 await fetch(
