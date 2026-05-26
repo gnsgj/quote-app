@@ -173,26 +173,34 @@ W: www.gnsvce.com
 
     // 구글시트 발송이력 저장
 
-    const params =
-new URLSearchParams({
+await fetch(
+  'https://script.google.com/macros/s/AKfycbx3xkm-cxudWnpBVq7e2LKrJkNdWXJS--3MCI-AqYs0fVQfdS0ZrbkLI9Ef1mU29lYv/exec',
+  {
 
-  client: client,
+    method:'POST',
 
-  email: email,
+    headers:{
+      'Content-Type':'application/json'
+    },
 
-  manager:
-  managerEmail || "김만식",
+    body:JSON.stringify({
 
-  total:
-  req.body.total || "",
+      client: client,
 
-  summary:
-  req.body.summary || "",
+      email: email,
 
-  note:
-  req.body.note || ""
+      manager: managerEmail || "김만식",
 
-});
+      total: req.body.total || "",
+
+      summary: req.body.summary || "",
+
+      note: req.body.note || ""
+
+    })
+
+  }
+);
 
 const sheetResponse =
 await fetch(
