@@ -1132,6 +1132,39 @@ div.style.background = '#fff';
   });
 
 }
+
+function makeSummary(){
+
+  const names =
+  document.querySelectorAll('.item-name');
+
+  let arr = [];
+
+  names.forEach(v=>{
+
+    if(v.value){
+
+      arr.push(v.value);
+
+    }
+
+  });
+
+  if(arr.length === 0){
+
+    return '';
+
+  }
+
+  if(arr.length === 1){
+
+    return arr[0];
+
+  }
+
+  return `${arr[0]} 외 ${arr.length-1}건`;
+
+}
   
 </script>
 
