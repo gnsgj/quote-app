@@ -1010,17 +1010,23 @@ async function sendEmail(){
 
       body:JSON.stringify({
 
-  email:email,
+  email: email,
 
   client:
   document.getElementById('client').value,
 
-  fixedManager:
-  document.getElementById('fixedManager').checked,
-
   managerEmail:
-  document.getElementById('managerEmail').value,
-  
+  document.getElementById('managerSelect').value,
+
+  total:
+  document.getElementById('finalTotal').innerText,
+
+  summary:
+  makeSummary(),
+
+  note:
+  document.getElementById('note').value,
+
   image:image
 
 })
