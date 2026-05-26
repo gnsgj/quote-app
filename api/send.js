@@ -171,6 +171,36 @@ W: www.gnsvce.com
 
     });
 
+    // 구글시트 발송이력 저장
+
+await fetch(
+  'https://script.google.com/macros/s/AKfycbx3xkm-cxudWnpBVq7e2LKrJkNdWXJS--3MCI-AqYs0fVQfdS0ZrbkLI9Ef1mU29lYv/exec',
+  {
+
+    method:'POST',
+
+    headers:{
+      'Content-Type':'application/json'
+    },
+
+    body:JSON.stringify({
+
+      client: client,
+
+      email: email,
+
+      manager: managerEmail || "김만식",
+
+      total: req.body.total || "",
+
+      summary: req.body.summary || "",
+
+      note: req.body.note || ""
+
+    })
+
+  }
+);
     res.status(200).json({
       success: true
     });
