@@ -67,7 +67,9 @@ export default async function handler(req, res) {
     const uniqueCc =
     [...new Set(ccArray)].join(',');
 
-    /* ========================= */
+    /* =========================
+       메일 발송
+    ========================= */
 
     await transporter.sendMail({
 
@@ -171,72 +173,59 @@ W: www.gnsvce.com
 
     });
 
-    // 구글시트 발송이력 저장
+    /* =========================
+       구글시트 발송이력 저장
+    ========================= */
 
-try{
+    const params =
+    new URLSearchParams({
 
-  await fetch(
-    'https://script.google.com/macros/s/AKfycbx3xkm-cxudWnpBVq7e2LKrJkNdWXJS--3MCI-AqYs0fVQfdS0ZrbkLI9Ef1mU29lYv/exec',
-    {
+      client: client,
 
-      method:'POST',
+      email: email,
 
-      headers:{
-        'Content-Type':'application/json'
-      },
+      manager:
+      managerEmail || "김만식",
 
-      body:JSON.stringify({
+      total:
+      req.body.total || "",
 
-        client: client,
+      summary:
+      req.body.summary || "",
 
-        email: email,
+      note:
+      req.body.note || ""
 
-        manager: managerEmail || "김만식",
+    });
 
-        total: req.body.total || "",
+    const sheetResponse =
+    await fetch(
 
-        summary: req.body.summary || "",
+      'https://script.google.com/macros/s/AKfycbx3xkm-cxudWnpBVq7e2LKrJkNdWXJS--3MCI-AqYs0fVQfdS0ZrbkLI9Ef1mU29lYv/exec',
 
-        note: req.body.note || ""
+      {
 
-      })
+        method:'POST',
+
+        body:params
+
+      }
+
+    );
+
+    const result =
+    await sheetResponse.text();
+
+    if(result !== 'success'){
+
+      throw new Error(
+        '구글시트 저장 실패'
+      );
 
     }
-  );
 
-}catch(err){
+    /* ========================= */
 
-  console.log('시트 저장 실패');
-
-}
-
-const sheetResponse =
-await fetch(
-
-  'https://script.google.com/macros/s/AKfycbx3xkm-cxudWnpBVq7e2LKrJkNdWXJS--3MCI-AqYs0fVQfdS0ZrbkLI9Ef1mU29lYv/exec',
-
-  {
-
-    method:'POST',
-
-    body:params
-
-  }
-
-);
-
-const result =
-await sheetResponse.text();
-
-if(result !== 'success'){
-
-  throw new Error(
-    '구글시트 저장 실패'
-  );
-
-}
-    
-);
     res.status(200).json({
       success: true
     });
