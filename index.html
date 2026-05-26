@@ -336,6 +336,17 @@ button{
 
 }
 
+.search-results{
+  border:1px solid #ddd;
+  border-radius:6px;
+  overflow:hidden;
+  margin-top:-5px;
+  margin-bottom:10px;
+  max-height:220px;
+  overflow-y:auto;
+  background:#fff;
+} 
+  
 </style>
 </head>
 
@@ -468,6 +479,20 @@ button{
 
 <script>
 
+let itemDB = [];
+
+fetch('/db.json')
+
+.then(res => res.json())
+
+.then(data => {
+
+  itemDB = data;
+
+  console.log('DB Loaded:', itemDB.length);
+
+});
+
 let itemCount = 0;
 
 function addItem(){
@@ -484,15 +509,23 @@ function addItem(){
       품목 ${itemCount}
     </div>
 
-    <input class="item-name" placeholder="품목명">
+   <input
+  class="item-search"
+  placeholder="품목 검색"
+  oninput="searchItem(this)"
+>
 
-    <input class="item-detail" placeholder="세부내용">
+<div class="search-results"></div>
 
-    <input class="item-price" type="number" placeholder="단가">
+<input class="item-name" placeholder="품목명">
 
-    <input class="item-qty" type="number" placeholder="수량">
+<input class="item-detail" placeholder="세부내용">
 
-    <input class="item-note" placeholder="비고">
+<input class="item-price" type="number" placeholder="단가">
+
+<input class="item-qty" type="number" placeholder="수량">
+
+<input class="item-note" placeholder="비고">
 
     <button class="delete-btn" onclick="this.parentElement.remove()">
       품목 삭제
@@ -949,6 +982,79 @@ async function sendEmail(){
 
 }
 
+function searchItem(input){
+
+  const keyword =
+  input.value.trim().toLowerCase();
+
+  const box =
+  input.parentElement.querySelector('.search-results');
+
+  box.innerHTML = '';
+
+  if(keyword.length < 1){
+
+    return;
+
+  }
+
+  const results =
+  itemDB.filter(item =>
+
+    item.part.toLowerCase().includes(keyword)
+    ||
+
+    item.name.toLowerCase().includes(keyword)
+
+  ).slice(0,10);
+
+  results.forEach(item => {
+
+    const div =
+    document.createElement('div');
+
+    div.style.padding = '8px';
+    div.style.borderBottom = '1px solid #ddd';
+    div.style.cursor = 'pointer';
+    div.style.background = '#fff';
+
+    div.innerHTML = `
+      <strong>${item.part}</strong><br>
+      <span style="font-size:13px;color:#666;">
+        ${item.name}
+      </span>
+    `;
+
+    div.onclick = () => {
+
+      const parent =
+      input.parentElement;
+
+      parent.querySelector('.item-name').value =
+      item.part;
+
+      parent.querySelector('.item-detail').value =
+      item.name;
+
+      parent.querySelector('.item-price').value =
+      item.total;
+
+      parent.querySelector('.item-note').value =
+      item.note;
+
+      input.value =
+      `${item.part} / ${item.name}`;
+
+      box.innerHTML = '';
+
+    };
+
+    box.appendChild(div);
+
+  });
+
+}
+  
 </script>
 
 </body>
