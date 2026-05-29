@@ -1124,12 +1124,68 @@ div.style.cursor = 'pointer';
 
 div.style.background = '#fff';
 
-    div.innerHTML = `
-      <strong>${item.part}</strong><br>
-      <span style="font-size:13px;color:#666;">
-        ${item.name}
+   div.innerHTML = `
+
+  <div>
+
+    <strong>
+
+      <span style="
+        color:#2f5d99;
+        font-size:12px;
+      ">
+        [${item.category}]
       </span>
-    `;
+
+      ${item.part}
+
+    </strong>
+
+  </div>
+
+  <div style="
+    font-size:13px;
+    color:#666;
+    margin-top:2px;
+  ">
+    ${item.name}
+  </div>
+
+  <div style="
+    margin-top:4px;
+    font-size:12px;
+  ">
+
+    <span style="
+      color:#1b7f3a;
+      font-weight:bold;
+    ">
+      판매 ${Number(item.sale).toLocaleString()}원
+    </span>
+
+    &nbsp;|&nbsp;
+
+    <span style="
+      color:#d2691e;
+      font-weight:bold;
+    ">
+      공임 ${Number(item.labor).toLocaleString()}원
+    </span>
+
+  </div>
+
+  <div style="
+    margin-top:2px;
+    color:#c0392b;
+    font-weight:bold;
+    font-size:12px;
+  ">
+
+    총액 ${Number(item.total).toLocaleString()}원
+
+  </div>
+
+`;
 
     div.onclick = () => {
 
